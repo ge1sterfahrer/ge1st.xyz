@@ -1,0 +1,133 @@
+/* ---------- Font ---------- */
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("../fonts/JetBrainsMono-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    background: #000;
+    color: #fff;
+}
+
+body {
+    font-family: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+    overflow: hidden;
+}
+
+main {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+/* ---------- Glitch ---------- */
+.glitch {
+    position: relative;
+    margin: 0;
+    font-size: 72px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    user-select: none;
+    animation: glitch-skew 4.5s infinite steps(1);
+}
+
+/* Two offset copies of the text, colored red/cyan, sliced by clip-path */
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    background: #000;
+    overflow: hidden;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff0040;
+    animation: glitch-slice-a 4.5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #00e5ff, 2px 2px #ff0040;
+    animation: glitch-slice-b 3.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-slice-a {
+    0%   { clip-path: inset(12% 0 78% 0); transform: translate(-3px, 0); }
+    10%  { clip-path: inset(64% 0 8% 0);  transform: translate(3px, 0); }
+    20%  { clip-path: inset(40% 0 43% 0); transform: translate(-2px, 0); }
+    30%  { clip-path: inset(85% 0 2% 0);  transform: translate(1px, 0); }
+    40%  { clip-path: inset(5% 0 70% 0);  transform: translate(-4px, 0); }
+    50%  { clip-path: inset(52% 0 30% 0); transform: translate(2px, 0); }
+    60%  { clip-path: inset(22% 0 60% 0); transform: translate(-1px, 0); }
+    70%  { clip-path: inset(75% 0 12% 0); transform: translate(4px, 0); }
+    80%  { clip-path: inset(33% 0 50% 0); transform: translate(-3px, 0); }
+    90%  { clip-path: inset(90% 0 1% 0);  transform: translate(2px, 0); }
+    100% { clip-path: inset(48% 0 38% 0); transform: translate(-2px, 0); }
+}
+
+@keyframes glitch-slice-b {
+    0%   { clip-path: inset(70% 0 15% 0); transform: translate(2px, 0); }
+    10%  { clip-path: inset(10% 0 82% 0); transform: translate(-3px, 0); }
+    20%  { clip-path: inset(45% 0 35% 0); transform: translate(4px, 0); }
+    30%  { clip-path: inset(2% 0 90% 0);  transform: translate(-1px, 0); }
+    40%  { clip-path: inset(58% 0 20% 0); transform: translate(3px, 0); }
+    50%  { clip-path: inset(28% 0 62% 0); transform: translate(-4px, 0); }
+    60%  { clip-path: inset(80% 0 5% 0);  transform: translate(1px, 0); }
+    70%  { clip-path: inset(15% 0 70% 0); transform: translate(-2px, 0); }
+    80%  { clip-path: inset(62% 0 25% 0); transform: translate(3px, 0); }
+    90%  { clip-path: inset(38% 0 48% 0); transform: translate(-3px, 0); }
+    100% { clip-path: inset(6% 0 80% 0);  transform: translate(2px, 0); }
+}
+
+/* Short, violent jolts of the whole word, several per cycle */
+@keyframes glitch-skew {
+    0%, 100% { transform: none; }
+    /* small early twitch */
+    18%      { transform: skewX(6deg) translateX(2px); }
+    19%      { transform: none; }
+    /* mid-cycle double jolt */
+    44%      { transform: skewX(-14deg) translateX(-5px); }
+    45%      { transform: skewX(10deg) translateX(4px) scaleY(1.03); }
+    46%      { transform: none; }
+    /* vertical hiccup */
+    63%      { transform: translate(-3px, 2px) scaleY(0.94); }
+    64%      { transform: none; }
+    /* big burst */
+    88%      { transform: skewX(-20deg) translateX(-7px); }
+    89%      { transform: skewX(16deg) translateX(6px); }
+    90%      { transform: skewX(-8deg) translate(-3px, -1px) scaleY(1.06); }
+    91%      { transform: none; }
+    95%      { transform: skewX(9deg) translateX(3px); }
+    96%      { transform: none; }
+}
+
+/* ---------- Accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .glitch,
+    .glitch::before,
+    .glitch::after {
+        animation: none;
+    }
+
+    .glitch::before,
+    .glitch::after {
+        display: none;
+    }
+}
